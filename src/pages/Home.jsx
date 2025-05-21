@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import fondo from '../assets/images/fondo.png'; 
 import Footer from '../components/Footer';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
+import HeroBackground from '../components/HeroBackground';
 
 export default function Home() {
   //context user para el manejo de sesiones JWT
@@ -119,13 +119,11 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32 ">
-        <img
-          src={fondo}
-          alt="Fondo comida criolla"
-          className="absolute inset-0 -z-10 w-full h-full object-cover object-right md:object-center"
-        />
-        
+      <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
+        <div className="absolute inset-0 -z-10">
+          <HeroBackground className="w-full h-full object-cover" />
+          <div className="absolute inset-0 backdrop-blur-[1px] bg-black/30" />
+        </div>
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl">
@@ -139,18 +137,18 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base/7 font-semibold text-white sm:grid-cols-2 md:flex lg:gap-x-10">
-              <a href="#">
-                Bandeja Paisa <span aria-hidden="true">&rarr;</span>
-              </a>
-              <a href="#">
-                Ajiaco <span aria-hidden="true">&rarr;</span>
-              </a>
-              <a href="#">
-                Sancocho <span aria-hidden="true">&rarr;</span>
-              </a>
-              <a href="#">
-                Arepas <span aria-hidden="true">&rarr;</span>
-              </a>
+              <p href="#">
+                Bandeja Paisa 
+              </p>
+              <p href="#">
+                Ajiaco 
+              </p>
+              <p href="#">
+                Sancocho 
+              </p>
+              <p href="#">
+                Arepas 
+              </p>
             </div>
             <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
               <div className="flex flex-col-reverse gap-1">

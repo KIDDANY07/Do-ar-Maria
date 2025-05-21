@@ -1,18 +1,22 @@
+// Importacion de librerias necesarias
 import React from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { Navigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react'
+
+// Componente principal de productos
 export default function Products() {
-  // Context del usuario
+
+  // Obtiene la informacion del usuario desde el contexto
   const { user } = useContext(UserContext);
 
-  // Solo se aceptan "admin" en este apartado
+  // Redirecciona al inicio si el usuario no esta autenticado o no es admin
   if (!user || user.role !== 'admin') {
     return <Navigate to="/" replace />;
   }
 
-  // Estados
+  // Estados para manejar productos, formularios, carga, errores, y modal
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [form, setForm] = useState({
@@ -30,7 +34,7 @@ export default function Products() {
 
   const API_URL = 'http://localhost:5000/api/products';
 
-  // Carga de productos
+  // Funcion para obtener los productos desde la API
   const fetchProducts = async () => {
     setLoading(true);
     setError(null);
@@ -46,11 +50,12 @@ export default function Products() {
     }
   };
 
+  // Ejecuta fetchProducts una sola vez al montar el componente
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  // UseEffect de filtrado por nombre
+  // Filtra productos en tiempo real segun el termino de busqueda
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredProducts(products);
@@ -63,6 +68,7 @@ export default function Products() {
     }
   }, [searchTerm, products]);
 
+  // Actualiza el estado del formulario cuando cambia un campo
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({
@@ -71,11 +77,12 @@ export default function Products() {
     }));
   };
 
+  // Actualiza el termino de busqueda
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // Modales de agregar - editar 
+  // Abre el modal para agregar producto
   const openAddModal = () => {
     setForm({ name: '', description: '', price: '', stock: '', image_url: '' });
     setEditingProduct(null);
@@ -83,6 +90,7 @@ export default function Products() {
     setIsModalOpen(true);
   };
 
+  // Abre el modal con los datos de un producto para editarlo
   const handleEdit = (product) => {
     setForm({
       name: product.name,
@@ -96,6 +104,7 @@ export default function Products() {
     setIsModalOpen(true);
   };
 
+  // Cierra el modal y reinicia el formulario
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingProduct(null);
@@ -103,7 +112,7 @@ export default function Products() {
     setError(null);
   };
 
-  // Botones Actualizar o Crear
+  // Envia el formulario para crear o actualizar un producto
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -111,11 +120,11 @@ export default function Products() {
     const priceNum = parseFloat(form.price);
     const stockNum = parseInt(form.stock, 10);
     if (isNaN(priceNum) || priceNum < 0) {
-      setError('El precio debe ser un número positivo');
+      setError('El precio debe ser un numero positivo');
       return;
     }
     if (isNaN(stockNum) || stockNum < 0) {
-      setError('El stock debe ser un número positivo');
+      setError('El stock debe ser un numero positivo');
       return;
     }
 
@@ -134,9 +143,9 @@ export default function Products() {
     }
   };
 
-  // Botón eliminar
+  // Elimina un producto luego de confirmacion
   const handleDelete = async (id) => {
-    if (window.confirm('¿Estás seguro de eliminar este producto?')) {
+    if (window.confirm('¿Estas seguro de eliminar este producto?')) {
       setError(null);
       try {
         await axios.delete(`${API_URL}/${id}`);
@@ -148,10 +157,12 @@ export default function Products() {
     }
   };
 
+  // Renderizado principal del componente
   return (
     <div className="container mx-auto p-6 mt-20">
-      <h1 className="text-3xl font-bold mb-6">Gestión de Productos</h1>
-      {/*Buscador del producto*/}
+      <h1 className="text-3xl font-bold mb-6">Gestion de Productos</h1>
+
+      {/* Buscador de productos */}
       <input
         type="text"
         placeholder="Buscar producto por nombre..."
@@ -159,7 +170,8 @@ export default function Products() {
         onChange={handleSearchChange}
         className="mb-6 p-2 border rounded w-full"
       />
-      {/*Agregar producto*/}
+
+      {/* Boton para agregar un producto */}
       <button
         onClick={openAddModal}
         className="bg-orange-600 text-white px-6 py-2 rounded mb-6 hover:bg-orange-800 duration-300 w-full"
@@ -167,7 +179,7 @@ export default function Products() {
         Agregar Producto
       </button>
 
-      {/* Modal */}
+      {/* Modal de agregar o editar producto */}
       {isModalOpen && (
         <div className="fixed inset-0 backdrop-blur-sm flex justify-center items-center z-50 shadow-2xl">
           <div className="bg-white rounded-lg p-6 w-full max-w-lg relative">
@@ -181,6 +193,7 @@ export default function Products() {
               {editingProduct ? 'Editar Producto' : 'Agregar Producto'}
             </h2>
 
+            {/* Formulario del modal */}
             <form onSubmit={handleSubmit} className="grid gap-4">
               <input
                 type="text"
@@ -193,7 +206,7 @@ export default function Products() {
               />
               <textarea
                 name="description"
-                placeholder="Descripción"
+                placeholder="Descripcion"
                 value={form.description}
                 onChange={handleChange}
                 required
@@ -227,8 +240,10 @@ export default function Products() {
                 className="p-2 border border-orange-600 focus:outline-orange-600 rounded duration-300"
               />
 
+              {/* Mensaje de error si existe */}
               {error && <p className="text-red-500">{error}</p>}
 
+              {/* Botones del modal */}
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
@@ -253,7 +268,7 @@ export default function Products() {
         </div>
       )}
 
-      {/* Lista de productos */}
+      {/* Lista de productos renderizados */}
       {loading ? (
         <p>Cargando productos...</p>
       ) : (

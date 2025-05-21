@@ -1,21 +1,31 @@
 import React from 'react'
+// Importa el componente Link de react-router-dom para crear enlaces internos
 import { Link } from 'react-router-dom'
+
+// Componente funcional Footer que renderiza el pie de pagina
 export default function Footer() {
   return (
+    // Etiqueta footer con estilos de fondo y margen superior
     <footer className="bg-gray-100 dark:bg-gray-900 mt-12">
+      {/* Contenedor central con maximo ancho y padding */}
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+        {/* Contenedor para centrar el titulo con color teal */}
         <div className="flex justify-center text-teal-600 dark:text-teal-300">
+          {/* Titulo principal con enlace a la pagina de inicio */}
           <h1 className="text-4xl font-bold">
             <Link to="/" className='animated-gradient-text'>Doña Maria</Link>
           </h1>
         </div>
 
+        {/* Parrafo descriptivo centrado con estilos para texto */}
         <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 dark:text-gray-400">
-          La gastronomía colombiana es tan diversa como su geografía y su gente. Cada región del país aporta ingredientes autóctonos, técnicas culinarias tradicionales y sabores únicos que reflejan la historia y la cultura de Colombia.
+          La gastronomia colombiana es tan diversa como su geografia y su gente. Cada region del pais aporta ingredientes autóctonos, tecnicas culinarias tradicionales y sabores unicos que reflejan la historia y la cultura de Colombia.
         </p>
+        {/* Contenedor centrado para mostrar el texto "Creado por" */}
         <div className='flex justify-center items-center mt-4'>
           <h1 className='text-white text-xl'>Creado por</h1>
         </div>
+        {/* Lista horizontal con enlaces a los creadores */}
         <ul className="mt-4 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
           <li>
             <a
@@ -36,6 +46,7 @@ export default function Footer() {
           </li>
         </ul>
 
+        {/* Lista con iconos y enlaces sociales, en este caso GitHub */}
         <ul className="mt-12 flex justify-center gap-6 md:gap-8">
           <li>
             <a
@@ -44,7 +55,9 @@ export default function Footer() {
               target="_blank"
               className="text-gray-700 transition hover:text-gray-700/75 dark:text-white dark:hover:text-white/75"
             >
+              {/* Texto oculto para accesibilidad */}
               <span className="sr-only">GitHub</span>
+              {/* Icono SVG de GitHub */}
               <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   fillRule="evenodd"

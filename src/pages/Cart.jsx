@@ -2,13 +2,20 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { Navigate } from 'react-router-dom';
-import { FaShoppingCart  } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
+
+// Componente principal del carrito
 export default function Cart() {
+  // Se obtiene el usuario desde el contexto
   const { user } = useContext(UserContext);
+
+  // Estado para los productos del carrito
   const [cartItems, setCartItems] = useState([]);
+
+  // Estado para manejar el indicador de carga
   const [loading, setLoading] = useState(true);
 
-  //Fetch a la api/cart
+  // Funcion para obtener los productos del carrito desde la API
   const fetchCart = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -22,12 +29,13 @@ export default function Cart() {
       setLoading(false);
     }
   };
-  //Traer el usuario para definir el carrito
+
+  // Se ejecuta al detectar cambios en el usuario
   useEffect(() => {
     if (user) fetchCart();
   }, [user]);
 
-  //Cantidad productos
+  // Funcion para actualizar la cantidad de un producto
   const updateQuantity = async (productId, quantity) => {
     if (quantity < 1) return; 
     const token = localStorage.getItem('token');
@@ -40,7 +48,8 @@ export default function Cart() {
       console.error('Error actualizando cantidad:', err);
     }
   };
-  //Eliminar producto
+
+  // Funcion para eliminar un producto del carrito
   const removeItem = async (productId) => {
     const token = localStorage.getItem('token');
     try {
@@ -53,55 +62,66 @@ export default function Cart() {
     }
   };
 
-  //"Estados" por si falla algo o no existe una sesion
+  // Redirecciona si no hay usuario logueado
   if (!user) {
     return <Navigate to="/" replace />;
   }
 
+  // Muestra pantalla de carga
   if (loading) {
     return <div className="flex justify-center items-center font-semibold h-screen">Cargando carrito...</div>;
   }
 
+  // Muestra mensaje si el carrito esta vacio
   if (cartItems.length === 0) {
     return <div className="flex justify-center items-center font-semibold h-screen">No hay nada en el carrito.</div>;
   }
-  //Total valores e hipotetico descuento
+
+  // Calculo del subtotal, IVA y total
   const subtotal = cartItems.reduce((acc, item) => acc + Number(item.price) * item.quantity, 0);
   const vat = subtotal * 0.1;
   const discount = 0; 
   const total = subtotal + vat - discount;
 
-  const handleSubmitPay = (()=>{
-    alert('comptra realizada con exito');
-  })
+  // Funcion para simular finalizacion de compra
+  const handleSubmitPay = (()=> {
+    alert('compra realizada con exito');
+  });
 
+  // Retorna la interfaz del carrito
   return (
     <section className="flex items-center justify-center min-h-screen bg-gray-50 px-4 pt-16 mt-12">
       <div className="mx-auto w-full max-w-3xl bg-white rounded shadow p-6 sm:px-6 sm:py-12">
+        {/* Encabezado del carrito */}
         <header className="text-center mb-8">
           <h1 className='text-3xl sm:text-4xl font-bold text-gray-900 flex items-center justify-center'>
             Carrito de {user.name}
           </h1>
         </header>
-       {/*Lista de productos*/}
+
+        {/* Lista de productos en el carrito */}
         <ul className="space-y-6">
           {cartItems.map((item) => (
             <li
               key={item.product_id}
               className="flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-4 border-b pb-4"
             >
+              {/* Imagen del producto */}
               <img
                 src={item.image_url}
                 alt={item.name}
                 className="h-20 w-20 sm:h-16 sm:w-16 rounded-sm object-cover self-center"
               />
 
+              {/* Detalles del producto */}
               <div className="flex-1 text-center sm:text-left">
                 <h3 className="text-base font-semibold text-gray-900">{item.name}</h3>
                 <p className="text-sm text-gray-600">{item.description}</p>
               </div>
 
+              {/* Controles de cantidad y eliminar */}
               <div className="flex flex-wrap justify-center sm:justify-end items-center gap-2 mt-2 sm:mt-0">
+                {/* Boton para disminuir cantidad */}
                 <button
                   onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
                   disabled={item.quantity <= 1}
@@ -110,6 +130,7 @@ export default function Cart() {
                   –
                 </button>
 
+                {/* Campo para ingresar cantidad manualmente */}
                 <input
                   type="number"
                   min="1"
@@ -121,6 +142,7 @@ export default function Cart() {
                   className="w-14 h-8 rounded border border-gray-300 text-center text-sm text-gray-600"
                 />
 
+                {/* Boton para aumentar cantidad */}
                 <button
                   onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
                   className="w-8 h-8 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
@@ -128,6 +150,7 @@ export default function Cart() {
                   +
                 </button>
 
+                {/* Boton para eliminar producto */}
                 <button
                   onClick={() => removeItem(item.product_id)}
                   className="ml-4 text-gray-600 hover:text-red-600 transition"
@@ -148,16 +171,17 @@ export default function Cart() {
                     />
                   </svg>
                 </button>
-              
               </div>
-              {/*Precios individuales*/}
+
+              {/* Precio individual total por producto */}
               <div className="sm:w-16 text-right font-semibold text-gray-900 mt-2 sm:mt-0">
                 ${(Number(item.price) * item.quantity).toFixed(2)}
               </div>
             </li>
           ))}
         </ul>
-        {/*Precios descuentos etc*/}
+
+        {/* Seccion de resumen de precios */}
         <div className="mt-10 border-t border-gray-200 pt-6 text-right space-y-2 text-sm sm:text-base">
           <div className="flex justify-between text-gray-700">
             <span>Subtotal</span>
@@ -176,6 +200,7 @@ export default function Cart() {
             <span>${total.toFixed(2)}</span>
           </div>
 
+          {/* Boton para finalizar la compra */}
           <button
             onClick={handleSubmitPay}
             className="mt-4 w-full rounded bg-gray-800 py-3 text-white hover:bg-orange-600 transition duration-300"
@@ -187,6 +212,3 @@ export default function Cart() {
     </section>
   );
 }
-
-
-
