@@ -100,23 +100,21 @@ export default function About() {
     ],
     githubUrl: "https://github.com/KIDDANY07",
     imageSrc: danielImg,
-    imageAlt: "Retrato de Daniel Jose Morales Teatino",
+    imageAlt: "DanielJoseMoralesTeatino",
   };
 
   // Informacion del perfil de Shara
   const shara = {
     name: "Shara Brigith Bernal Angel",
-    description: `Desarrolladora web con pasion por la experiencia de usuario y la optimizacion.
-      Especialista en frontend con React, Next.js y diseno UI/UX. Siempre buscando
-      innovar con codigo limpio y accesible.`,
+    description: `Soy estudiante de ingeniería de software creo tecnología con propósito. Soy programadora enfocada en el desarrollo de soluciones digitales funcionales, humanas y creativas. Me encanta aprender, resolver problemas y transformar ideas en código útil.`,
     skills: [
-      "🎓 Licenciatura en Diseno Digital",
-      "💻 Frontend: React, Next.js, TailwindCSS",
-      "🎨 Diseno UI/UX y accesibilidad",
+      "🎓 Ingenieria de Software de la Universidad de Cundinamarca",
+      "💻 Frontend: JavaScript, CSS y Boostrap",
+      "🛠 Backend: Python, Java, PHP",
     ],
-    githubUrl: "https://github.com",
+    githubUrl: "https://github.com/Colibri33",
     imageSrc: sharaImg,
-    imageAlt: "Retrato de Shara Brigith Bernal Angel ",
+    imageAlt: "SharaBernal",
   };
 
   // Estructura principal de la pagina
