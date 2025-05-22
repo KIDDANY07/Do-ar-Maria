@@ -1,12 +1,16 @@
-# React + Vite
+Instalacion
+crear carpeta frontend
+git clone https://github.com/KIDDANY07/Do-ar-Maria.git
+npm run dev
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+inicializacion
+crear carpeta backend
+debemos tener el repositorio del backend 
+git clone https://github.com/KIDDANY07/backend-e-commerce
+node app.js
 
-Currently, two official plugins are available:
+iniciamos xampp
+iniciar apache
+iniciar mysql
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Importar base de datos que esta dentro del document de la entrega
