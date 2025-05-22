@@ -1,18 +1,24 @@
-Instalacion
-crear carpeta frontend
-git clone https://github.com/KIDDANY07/Do-ar-Maria.git
-npm install
-npm run dev
+# Instrucciones de Instalación y Ejecución
 
-inicializacion
-crear carpeta backend
-debemos tener el repositorio del backend 
-git clone https://github.com/KIDDANY07/backend-e-commerce
-npm install
-node app.js
+## Instalación del Frontend
 
-iniciamos xampp
-iniciar apache
-iniciar mysql
+1. Crear una carpeta para el frontend:
+   ```bash
+   mkdir frontend
+   cd frontend
+   git clone https://github.com/KIDDANY07/Do-ar-Maria.git .
+   npm install
+   npm run dev
 
-Importar base de datos que esta dentro del document de la entrega
+   ```
+## Instalación del Backend
+  ```bash
+     mkdir backend
+     cd backend
+     git clone https://github.com/KIDDANY07/backend-e-commerce.git .
+     npm install
+     node app.js
+  ```
+##Instalacion base de datos
+  1. descargar la base de datos que esta dentro del .rar
+  2. importarlo a mysql mediante phpmyadmin o por la consola
